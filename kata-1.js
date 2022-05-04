@@ -1,17 +1,20 @@
-let sumLargestNumbers = (array) => {
-  let x = 0;
-  let y = 0;
-  for (let i of array) {
-    if (i > x) {
-      x = i;
-    }
+function logLargestNumber(array) {
+  x = 0;
+  for (i of array) {
+   i > x ? x = i : x = x;
   }
-  for (let j of array) {
-    if (j > y && j < x) {
-      y = j;
-    }
+  return x;
+};
+function logSecondLargestNumber(array) {
+  y = 0;
+  for (i of array) {
+    (i > y && i < x) ? y = i : y = y;
   }
-  return x + y;
+  return y;
+}
+
+const sumLargestNumbers = (array) => {
+  return logLargestNumber(array) + logSecondLargestNumber(array);
 }
 
 console.log(sumLargestNumbers([0,10,100]));
