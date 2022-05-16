@@ -1,6 +1,7 @@
 const organizeInstructors = function (instructors) {
   let program = {};
   for (let i of instructors) {
+    console.log(program[i.course]);
     if (!program[i.course]) {
       program[i.course] = [];
     }

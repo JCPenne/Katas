@@ -1,44 +1,67 @@
+// object to store all the cases, their priorities and related functions
 
-
-
-
-function makeCase (input, cases) {
-  finalResult = '';
-  caseArray = [];
-
-  if (typeof cases === 'string') {
-    caseArray.push(cases);
-  } else if (typeof cases === 'object') {
-    for (i in cases) {
-      caseArray.push(cases[i])
-    }
+const createCaseTypes = () => ({
+  'camel':  {
+  priority: 0,
+  func: camelCase
+  },
+  'pascal': {
+  priority: 1,
+  func: pascalCase
+  },
+  'snake': {
+  priority: 2,
+  func: snakeCase
+  },
+  'kebab':  {
+    priority: 3,
+    func: kebabCase
+  },
+  'title':  {
+    priority: 4,
+    func: titleCase
+  },
+  'vowel':  {
+    priority: 5,
+    func: vowelCase
+  },
+  'consonant':  {
+    priority: 6,
+    func: consonantcase
+  },
+  'upper':  {
+    priority: 7,
+    func: upperCase
+  },
+  'lower':  {
+    priority: 8,
+    func: lowerCase
   }
+});
 
-  function camelHelper () {
-    let char = input.split(' ');
-    let camelResult = '';
-    for (i = 0; i < char.length; i ++) {
-      if (i != 0) {
-        camelResult += char[i].charAt(0).toUpperCase() + char[i].slice(1);
-      } else {
-        camelResult += char[i].toLowerCase();
-      }
-    }
-    return camelResult;
-  };
-  
-  function upperHelper () {
-    finalResult = input.toUpperCase();
-    return finalResult}
-
-  for (i = 0; i <= caseArray.length; i ++) {
-    if (caseArray[i] === 'camel') {
-      finalResult = camelHelper(input);
-    } else if (caseArray[i] === 'upper') {
-      finalResult = upperHelper(input);
-      }
-      return finalResult;
-    }
+// function to order the array of cases
+const caseOrder = (cases, caseTypes) => {
+  return typeof cases === 'string' ? [cases] : [...cases].sort((a,b) => caseTypes[a].priority - caseTypes[b].priority)
 };
-console.log(makeCase("this is a string", ['camel','upper']));
-console.log(makeCase("this is a string", 'upper'));
+const makeCase = (input, cases) => {
+  const caseTypes = createCaseTypes();
+  const sortedCases = caseOrder(cases,caseTypes)
+
+  let finalStr = input;
+  for (const caseStr of sortedCases) {
+    finalStr = caseTypes[caseStr].process(finalStr)
+  };
+};
+
+
+
+
+// create individual case functions here
+
+
+
+
+
+
+// console.log(makeCase("this is a string", 'camel'));
+// console.log(makeCase("this is a string", ['camel','upper']));
